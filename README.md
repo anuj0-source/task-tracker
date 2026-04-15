@@ -1,39 +1,41 @@
-# To-Do List Application (Node.js + MongoDB)
+# To-Do List Application (Node.js + MongoDB + Frontend)
 
-This project is a backend To-Do List application built with **Node.js**, **Express**, and **MongoDB**. It meets the assignment requirements for task management, persistence, validation, graceful error handling, and documentation.
+This is a full To-Do List application using a Node.js + Express backend, MongoDB persistence, and a responsive frontend UI.
 
 ## Features
 
-- Create a task with title and description
-- View all tasks
+- Create tasks with title and description
+- View all tasks in a clean dashboard
 - Edit task details
 - Delete tasks
-- Mark task as completed
-- Prevent completing an already completed task
-- Data persistence using MongoDB
-- Validation for non-empty task titles
-- Meaningful API error responses
+- Mark tasks as completed
+- Prevent marking a task complete if it is already completed
+- Store and retrieve tasks from MongoDB
+- Validate that title is not empty
+- Return meaningful API error messages
 - Bonus fields:
-  - `dueDate`
-  - `category`
+  - dueDate
+  - category
 
 ## Tech Stack
 
 - Node.js
 - Express.js
 - MongoDB + Mongoose
-- Jest + Supertest (unit/integration tests)
+- HTML, CSS, Vanilla JavaScript frontend
 
 ## Project Structure
 
-- `src/server.js`: application entry point
-- `src/app.js`: Express app setup and middleware wiring
-- `src/config/db.js`: MongoDB connection setup
-- `src/models/task.model.js`: Task schema and model
-- `src/controllers/task.controller.js`: route handler logic
-- `src/routes/task.routes.js`: task API routes
-- `src/middleware/error.middleware.js`: not-found and global error handlers
-- `tests/task.test.js`: endpoint tests
+- src/server.js: backend entry point
+- src/app.js: app setup, middleware, static frontend hosting
+- src/config/db.js: MongoDB connection logic
+- src/models/task.model.js: task schema and model
+- src/controllers/task.controller.js: API business logic
+- src/routes/task.routes.js: task routes
+- src/middleware/error.middleware.js: global API error handling
+- public/index.html: frontend markup
+- public/styles.css: frontend styling
+- public/app.js: frontend behavior and API integration
 
 ## Setup Instructions
 
@@ -43,84 +45,50 @@ This project is a backend To-Do List application built with **Node.js**, **Expre
    npm install
    ```
 
-2. Create a `.env` file by copying `.env.example`:
+2. Create a .env file in the project root:
 
    ```bash
-   copy .env.example .env
+   echo PORT=5000> .env
+   echo MONGODB_URI=mongodb://127.0.0.1:27017/todo_app>> .env
    ```
 
-3. Update `.env` with your MongoDB URL if needed:
+3. Configure environment values:
 
    ```env
    PORT=5000
    MONGODB_URI=mongodb://127.0.0.1:27017/todo_app
    ```
 
-4. Start the server:
+4. Start the app:
 
    ```bash
    npm run dev
    ```
 
-5. API will run at:
+5. Open the application in your browser:
 
-   ```
+   ```text
    http://localhost:5000
    ```
 
 ## API Endpoints
 
-### Health
-
-- `GET /api/health`
-
-### Tasks
-
-- `POST /api/tasks` - create task
-- `GET /api/tasks` - list all tasks
-- `PATCH /api/tasks/:id` - edit task details
-- `PATCH /api/tasks/:id/complete` - mark as completed
-- `DELETE /api/tasks/:id` - delete task
-
-## Example Request Bodies
-
-### Create Task
-
-```json
-{
-  "title": "Finish internship assignment",
-  "description": "Complete backend CRUD",
-  "dueDate": "2026-04-20",
-  "category": "Work"
-}
-```
-
-### Update Task
-
-```json
-{
-  "title": "Finish assignment quickly",
-  "description": "Update API and tests",
-  "dueDate": "2026-04-21",
-  "category": "Personal"
-}
-```
-
-## Running Tests
-
-```bash
-npm test
-```
+- GET /api/health
+- POST /api/tasks
+- GET /api/tasks
+- PATCH /api/tasks/:id
+- PATCH /api/tasks/:id/complete
+- DELETE /api/tasks/:id
 
 ## Key Decisions
 
-- Used a separate completion endpoint (`PATCH /api/tasks/:id/complete`) to clearly enforce the rule that already completed tasks cannot be completed again.
-- Added centralized error middleware so all errors are returned consistently with meaningful messages.
-- Used Mongoose schema validation plus explicit controller checks for clear title-validation feedback.
-- Included bonus fields (`dueDate`, `category`) without affecting required functionality.
+- The complete action is handled by a dedicated endpoint so the app can explicitly block duplicate completion attempts.
+- Validation is enforced in both controller logic and schema rules for better reliability and error clarity.
+- Frontend and backend are served from the same Express app to keep local setup simple.
+- Unit test feature was removed as requested.
 
 ## Submission Checklist
 
 - Create a GitHub repository.
-- Commit all code and push your branch.
-- Submit your GitHub repository link in the provided Google Form.
+- Commit and push your branch.
+- Submit the GitHub repository link in the Google Form.

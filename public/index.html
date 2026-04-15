@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <h1>Task Manager</h1>
+
+        <div class="stat-row" aria-live="polite">
+          <div class="stat-pill">
+            <span>Total</span>
+            <strong id="totalCount">0</strong>
+          </div>
+          <div class="stat-pill done">
+            <span>Done</span>
+            <strong id="completedCount">0</strong>
+          </div>
+          <div class="stat-pill pending">
+            <span>Pending</span>
+            <strong id="pendingCount">0</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="layout-grid">
+        <article class="panel create-panel">
+          <div class="panel-head">
+            <h2>New Task</h2>
+          </div>
+
+          <form id="createTaskForm" class="task-form" novalidate>
+            <label for="title">Title <span>*</span></label>
+            <input id="title" name="title" type="text" maxlength="120" required />
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="3" maxlength="500"></textarea>
+
+            <div class="form-row">
+              <div>
+                <label for="dueDate">Due Date</label>
+                <input id="dueDate" name="dueDate" type="date" />
+              </div>
+              <div>
+                <label for="category">Category</label>
+                <input id="category" name="category" type="text" maxlength="40" placeholder="General" />
+              </div>
+            </div>
+
+            <p id="createError" class="inline-error"></p>
+            <button type="submit" class="btn-primary">Save Task</button>
+          </form>
+        </article>
+
+        <article class="panel list-panel">
+          <div class="panel-head list-head">
+            <h2>Tasks</h2>
+          </div>
+
+          <div id="taskList" class="task-list" aria-live="polite"></div>
+        </article>
+      </section>
+    </main>
+
+    <section id="editModal" class="modal hidden" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>Edit Task</h3>
+          <button id="closeModalBtn" type="button" class="icon-btn" aria-label="Close edit modal">
+            &times;
+          </button>
+        </div>
+
+        <form id="editTaskForm" class="task-form" novalidate>
+          <input type="hidden" id="editTaskId" />
+
+          <label for="editTitle">Title <span>*</span></label>
+          <input id="editTitle" name="editTitle" type="text" maxlength="120" required />
+
+          <label for="editDescription">Description</label>
+          <textarea id="editDescription" name="editDescription" rows="3" maxlength="500"></textarea>
+
+          <div class="form-row">
+            <div>
+              <label for="editDueDate">Due Date</label>
+              <input id="editDueDate" name="editDueDate" type="date" />
+            </div>
+            <div>
+              <label for="editCategory">Category</label>
+              <input id="editCategory" name="editCategory" type="text" maxlength="40" />
+            </div>
+          </div>
+
+          <p id="editError" class="inline-error"></p>
+
+          <div class="modal-actions">
+            <button id="cancelEditBtn" type="button" class="btn-secondary">Cancel</button>
+            <button type="submit" class="btn-primary">Update Task</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <aside id="toast" class="toast hidden" role="status" aria-live="polite"></aside>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
